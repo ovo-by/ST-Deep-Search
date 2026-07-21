@@ -8,32 +8,40 @@ async function initDeepSearch() {
     const htmlText = await htmlResponse.text();
     $('body').append(htmlText);
 
-    // 2. 构造符合酒馆扩展菜单（魔法棒菜单）样式的按钮，命名为“深度搜卡”
+    // 2. 构造菜单按钮 HTML
     const searchBtnHtml = `
         <div id="deep-search-btn" class="extension_menu_entry interaction_link">
             <i class="fa-solid fa-magnifying-glass-plus" style="width: 20px; text-align: center; margin-right: 8px;"></i>
             <span>深度搜卡</span>
         </div>
     `;
-    
-    // 注入到你截图里的那个“扩展菜单”容器中
-    $('#extensions_menu').append(searchBtnHtml);
 
-    // 3. 绑定点击事件：点击菜单项打开搜索弹窗
+    // 3. 循环等待酒馆侧边栏菜单（#extensions_menu）渲染完成，防止找不到节点
+    const checkMenuExist = setInterval(() => {
+        const menuContainer = $('#extensions_menu');
+        if (menuContainer.length > 0) {
+            if ($('#deep-search-btn').length === 0) {
+                menuContainer.append(searchBtnHtml);
+            }
+            clearInterval(checkMenuExist); // 成功挂载后停止循环
+        }
+    }, 500);
+
+    // 4. 绑定点击事件：打开搜索弹窗
     $(document).on('click', '#deep-search-btn', () => {
         $('#deep-search-modal').css('display', 'flex').hide().fadeIn(200); 
         $('#deep-search-input').focus();
     });
 
-    // 4. 点击顶栏粉白粉按钮关闭弹窗
-    $('#close-deep-search').on('click', () => {
+    // 5. 点击顶栏粉白粉按钮关闭弹窗
+    $(document).on('click', '#close-deep-search', () => {
         $('#deep-search-modal').fadeOut(200);
         $('#deep-search-input').val('');
         $('#deep-search-results').empty();
     });
 
-    // 5. 核心搜索匹配逻辑
-    $('#deep-search-input').on('input', function() {
+    // 6. 核心搜索逻辑
+    $(document).on('input', '#deep-search-input', function() {
         const keyword = $(this).val().trim().toLowerCase();
         
         if (!keyword) {
@@ -65,7 +73,6 @@ async function initDeepSearch() {
                     const start = Math.max(0, index - 20);
                     const end = Math.min(text.length, index + keyword.length + 20);
                     
-                    // 转义正则特殊字符，防止搜索符号时报错
                     const safeKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                     const snippet = text.substring(start, end).replace(
                         new RegExp(safeKeyword, 'gi'), 
@@ -111,8 +118,8 @@ function renderSearchResults(cardsData) {
         resultsContainer.append(cardHtml);
     });
 
-    // 点击搜索结果选中并跳转该角色
-    $('.deep-search-item').on('click', function() {
+    // 点击搜索结果切换角色
+    $(document).off('click', '.deep-search-item').on('click', '.deep-search-item', function() {
         const avatarFileName = $(this).data('avatar');
         $('#deep-search-modal').fadeOut(200);
         $('.character_select[avatar="' + avatarFileName + '"]').trigger('click');
