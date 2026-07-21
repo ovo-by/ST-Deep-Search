@@ -1,9 +1,9 @@
 /* 基础遮罩层与系统字体替代（避免使用手写字体） */
-.pixel-modal-overlay {
+..pixel-modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
+    z-index: 999999; /* 提至最高层，防止被侧边栏遮挡 */
     display: flex;
     align-items: center;
     justify-content: center;
