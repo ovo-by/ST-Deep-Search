@@ -1,6 +1,7 @@
 {
     "id": "st-deep-search",
-    "name": "Deep Search",
+    "display_name": "深度搜卡",
+    "name": "深度搜卡",
     "version": "1.0.0",
     "author": "Your Name",
     "description": "全文检索角色卡的设定、开场白、备用问候和剧情示例。",
