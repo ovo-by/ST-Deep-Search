@@ -1,0 +1,138 @@
+/* 基础遮罩层与系统字体替代（避免使用手写字体） */
+.pixel-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace; 
+}
+
+/* 像素风格主面板 */
+.pixel-modal-content {
+    background-color: #f0f0f0; 
+    border: 4px solid #000;
+    width: 80%;
+    max-width: 650px;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+    image-rendering: pixelated; 
+}
+
+/* 顶栏样式 */
+.pixel-top-bar {
+    background-color: #333;
+    color: white;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    border-bottom: 4px solid #000;
+}
+
+/* 顶栏：粉白粉返回按钮 */
+.dot-back-btn {
+    display: flex;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px;
+}
+.dot {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #000;
+    display: inline-block;
+}
+.pink-dot { background-color: #ff99cc; }
+.white-dot { background-color: #ffffff; }
+
+.pixel-title {
+    margin-left: 16px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.pixel-search-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* 像素风输入框 */
+.pixel-input {
+    width: 100%;
+    padding: 12px;
+    border: 4px solid #000;
+    font-size: 1.1rem;
+    outline: none;
+    font-family: inherit;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+.pixel-input:focus {
+    background-color: #e0f7fa;
+}
+
+/* 结果列表容器 */
+.pixel-results-container {
+    flex: 1;
+    overflow-y: auto;
+    border: 4px solid #000;
+    background: #fff;
+    padding: 8px;
+}
+
+.deep-search-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 2px dashed #000;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+.deep-search-item:hover {
+    background-color: #e0e0e0;
+}
+
+/* 确保头像完全露出且保持像素边框风格 */
+.deep-search-avatar {
+    width: 56px;
+    height: 56px;
+    border: 3px solid #000;
+    margin-right: 16px;
+    object-fit: cover;
+    display: block !important; 
+}
+
+.deep-search-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+/* 上下文文本预览 */
+.matched-text {
+    display: block;
+    font-size: 0.9rem;
+    color: #333;
+    margin-top: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 450px;
+}
+
+/* 关键词高亮 */
+.keyword-highlight {
+    background-color: #ffeb3b;
+    color: #000;
+    font-weight: bold;
+    border: 1px solid #000; 
+    padding: 0 4px;
+  }
